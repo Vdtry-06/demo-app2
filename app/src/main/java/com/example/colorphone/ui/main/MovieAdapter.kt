@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.colorphone.databinding.ItemMovieBinding
 import com.example.colorphone.domain.model.Movie
 
-class MovieAdapter : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(MovieDiffCallback()) {
+class MovieAdapter(private val onItemClick: (Movie) -> Unit) : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(MovieDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -16,7 +16,11 @@ class MovieAdapter : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(MovieDiffC
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val movie = getItem(position)
+        holder.bind(movie)
+        holder.itemView.setOnClickListener {
+            onItemClick(movie)
+        }
     }
 
     class MovieViewHolder(private val binding: ItemMovieBinding) :

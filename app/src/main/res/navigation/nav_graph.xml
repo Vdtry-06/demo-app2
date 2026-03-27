@@ -14,10 +14,36 @@
     <fragment
         android:id="@+id/movieFragment"
         android:name="com.example.colorphone.ui.main.MovieFragment"
-        android:label="MovieFragment" />
+        android:label="MovieFragment" >
+        <action
+            android:id="@+id/action_movieFragment_to_theatreFragment"
+            app:destination="@id/theatreFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.colorphone.ui.login.LoginFragment"
         android:label="LoginFragment" />
+    <fragment
+        android:id="@+id/theatreFragment"
+        android:name="com.example.colorphone.ui.theatre.TheatreFragment"
+        android:label="TheatreFragment" >
+        <argument
+            android:name="movieId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_theatreFragment_to_showtimeFragment"
+            app:destination="@id/showtimeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showtimeFragment"
+        android:name="com.example.colorphone.ui.showtime.ShowtimeFragment"
+        android:label="ShowtimeFragment" >
+        <argument
+            android:name="movieId"
+            app:argType="long" />
+        <argument
+            android:name="theaterId"
+            app:argType="long" />
+    </fragment>
 
 </navigation>
