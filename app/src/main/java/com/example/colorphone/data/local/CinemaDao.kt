@@ -51,6 +51,9 @@ interface CinemaDao {
     @Query("SELECT * FROM showtimes WHERE theaterId = :theaterId")
     fun getShowtimesForTheaterFlow(theaterId: Long): Flow<List<ShowtimeEntity>>
 
+    @Query("SELECT * FROM showtimes WHERE movieId = :movieId AND theaterId = :theaterId")
+    fun getShowtimesForMovieAndTheaterFlow(movieId: Long, theaterId: Long): Flow<List<ShowtimeEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertShowtimes(showtimes: List<ShowtimeEntity>)
 

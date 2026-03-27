@@ -30,6 +30,20 @@
         <argument
             android:name="movieId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_theatreFragment_to_showtimeFragment"
+            app:destination="@id/showtimeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showtimeFragment"
+        android:name="com.example.colorphone.ui.showtime.ShowtimeFragment"
+        android:label="ShowtimeFragment" >
+        <argument
+            android:name="movieId"
+            app:argType="long" />
+        <argument
+            android:name="theaterId"
+            app:argType="long" />
     </fragment>
 
 </navigation>

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.colorphone.databinding.ItemTheatreBinding
 import com.example.colorphone.domain.model.Theater
 
-class TheatreAdapter : ListAdapter<Theater, TheatreAdapter.TheatreViewHolder>(TheatreDiffCallback()) {
+class TheatreAdapter(private val onItemClick: (Theater) -> Unit) : ListAdapter<Theater, TheatreAdapter.TheatreViewHolder>(TheatreDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TheatreViewHolder {
         val binding = ItemTheatreBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -16,7 +16,11 @@ class TheatreAdapter : ListAdapter<Theater, TheatreAdapter.TheatreViewHolder>(Th
     }
 
     override fun onBindViewHolder(holder: TheatreViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val theater = getItem(position)
+        holder.bind(theater)
+        holder.itemView.setOnClickListener {
+            onItemClick(theater)
+        }
     }
 
     class TheatreViewHolder(private val binding: ItemTheatreBinding) :

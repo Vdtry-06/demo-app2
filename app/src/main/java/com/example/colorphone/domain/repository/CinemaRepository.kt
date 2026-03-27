@@ -60,6 +60,9 @@ class CinemaRepository @Inject constructor(
     fun getShowtimesForTheaterFlow(theaterId: Long): Flow<List<Showtime>> =
         cinemaDao.getShowtimesForTheaterFlow(theaterId).map { list -> list.map { it.toDomain() } }
 
+    fun getShowtimesForMovieAndTheaterFlow(movieId: Long, theaterId: Long): Flow<List<Showtime>> =
+        cinemaDao.getShowtimesForMovieAndTheaterFlow(movieId, theaterId).map { list -> list.map { it.toDomain() } }
+
     suspend fun bookTicket(ticket: Ticket): Long =
         cinemaDao.insertTicket(TicketEntity.fromDomain(ticket))
 

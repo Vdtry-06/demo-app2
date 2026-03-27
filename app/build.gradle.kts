@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
-    id("androidx.navigation.safeargs")
+    id("androidx.navigation.safeargs.kotlin")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("androidx.room")
     id("kotlin-parcelize")
