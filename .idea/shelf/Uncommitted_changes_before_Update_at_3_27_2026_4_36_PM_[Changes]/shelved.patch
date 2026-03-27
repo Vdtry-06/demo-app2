@@ -1,0 +1,287 @@
+Index: app/src/main/java/com/example/colorphone/ui/main/MovieAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.colorphone.ui.main\r\n\r\nimport android.view.LayoutInflater\r\nimport android.view.ViewGroup\r\nimport androidx.recyclerview.widget.DiffUtil\r\nimport androidx.recyclerview.widget.ListAdapter\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.example.colorphone.databinding.ItemMovieBinding\r\nimport com.example.colorphone.domain.model.Movie\r\n\r\nclass MovieAdapter(private val onItemClick: (Movie) -> Unit) : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(MovieDiffCallback()) {\r\n\r\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {\r\n        val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)\r\n        return MovieViewHolder(binding)\r\n    }\r\n\r\n    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {\r\n        val movie = getItem(position)\r\n        holder.bind(movie)\r\n        holder.itemView.setOnClickListener {\r\n            onItemClick(movie)\r\n        }\r\n    }\r\n\r\n    class MovieViewHolder(private val binding: ItemMovieBinding) :\r\n        RecyclerView.ViewHolder(binding.root) {\r\n        fun bind(movie: Movie) {\r\n            binding.tvTitle.text = movie.title\r\n            binding.tvDuration.text = \"${movie.duration} min\"\r\n            binding.tvDescription.text = movie.description\r\n            // Normally we would use Glide or Coil here to load posterUrl\r\n            // For now, we'll just leave it as it is.\r\n        }\r\n    }\r\n\r\n    private class MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {\r\n        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {\r\n            return oldItem.id == newItem.id\r\n        }\r\n\r\n        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {\r\n            return oldItem == newItem\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/colorphone/ui/main/MovieAdapter.kt b/app/src/main/java/com/example/colorphone/ui/main/MovieAdapter.kt
+--- a/app/src/main/java/com/example/colorphone/ui/main/MovieAdapter.kt	(revision bc76875baa2d8dc5a5bef5293399e274d12e69ca)
++++ b/app/src/main/java/com/example/colorphone/ui/main/MovieAdapter.kt	(date 1774604112931)
+@@ -5,6 +5,7 @@
+ import androidx.recyclerview.widget.DiffUtil
+ import androidx.recyclerview.widget.ListAdapter
+ import androidx.recyclerview.widget.RecyclerView
++import coil3.load
+ import com.example.colorphone.databinding.ItemMovieBinding
+ import com.example.colorphone.domain.model.Movie
+ 
+@@ -29,8 +30,7 @@
+             binding.tvTitle.text = movie.title
+             binding.tvDuration.text = "${movie.duration} min"
+             binding.tvDescription.text = movie.description
+-            // Normally we would use Glide or Coil here to load posterUrl
+-            // For now, we'll just leave it as it is.
++            binding.ivPoster.load(movie.posterUrl)
+         }
+     }
+ 
+Index: app/src/main/java/com/example/colorphone/ui/showtime/ShowtimeAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.colorphone.ui.showtime\r\n\r\nimport android.view.LayoutInflater\r\nimport android.view.ViewGroup\r\nimport androidx.recyclerview.widget.DiffUtil\r\nimport androidx.recyclerview.widget.ListAdapter\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.example.colorphone.databinding.ItemShowtimeBinding\r\nimport com.example.colorphone.domain.model.Showtime\r\nimport java.text.SimpleDateFormat\r\nimport java.util.Date\r\nimport java.util.Locale\r\n\r\nclass ShowtimeAdapter : ListAdapter<Showtime, ShowtimeAdapter.ShowtimeViewHolder>(ShowtimeDiffCallback()) {\r\n\r\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShowtimeViewHolder {\r\n        val binding = ItemShowtimeBinding.inflate(LayoutInflater.from(parent.context), parent, false)\r\n        return ShowtimeViewHolder(binding)\r\n    }\r\n\r\n    override fun onBindViewHolder(holder: ShowtimeViewHolder, position: Int) {\r\n        holder.bind(getItem(position))\r\n    }\r\n\r\n    class ShowtimeViewHolder(private val binding: ItemShowtimeBinding) :\r\n        RecyclerView.ViewHolder(binding.root) {\r\n        \r\n        private val timeFormat = SimpleDateFormat(\"HH:mm\", Locale.getDefault())\r\n\r\n        fun bind(showtime: Showtime) {\r\n            binding.tvRoomName.text = showtime.roomName\r\n            val start = timeFormat.format(Date(showtime.startTime))\r\n            val end = timeFormat.format(Date(showtime.endTime))\r\n            binding.tvTime.text = \"$start - $end\"\r\n        }\r\n    }\r\n\r\n    private class ShowtimeDiffCallback : DiffUtil.ItemCallback<Showtime>() {\r\n        override fun areItemsTheSame(oldItem: Showtime, newItem: Showtime): Boolean {\r\n            return oldItem.id == newItem.id\r\n        }\r\n\r\n        override fun areContentsTheSame(oldItem: Showtime, newItem: Showtime): Boolean {\r\n            return oldItem == newItem\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/colorphone/ui/showtime/ShowtimeAdapter.kt b/app/src/main/java/com/example/colorphone/ui/showtime/ShowtimeAdapter.kt
+--- a/app/src/main/java/com/example/colorphone/ui/showtime/ShowtimeAdapter.kt	(revision bc76875baa2d8dc5a5bef5293399e274d12e69ca)
++++ b/app/src/main/java/com/example/colorphone/ui/showtime/ShowtimeAdapter.kt	(date 1774603765059)
+@@ -11,18 +11,21 @@
+ import java.util.Date
+ import java.util.Locale
+ 
+-class ShowtimeAdapter : ListAdapter<Showtime, ShowtimeAdapter.ShowtimeViewHolder>(ShowtimeDiffCallback()) {
++class ShowtimeAdapter(private val onShowtimeClicked: (Long) -> Unit) : ListAdapter<Showtime, ShowtimeAdapter.ShowtimeViewHolder>(ShowtimeDiffCallback()) {
+ 
+     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShowtimeViewHolder {
+         val binding = ItemShowtimeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+-        return ShowtimeViewHolder(binding)
++        return ShowtimeViewHolder(binding, onShowtimeClicked)
+     }
+ 
+     override fun onBindViewHolder(holder: ShowtimeViewHolder, position: Int) {
+         holder.bind(getItem(position))
+     }
+ 
+-    class ShowtimeViewHolder(private val binding: ItemShowtimeBinding) :
++    class ShowtimeViewHolder(
++        private val binding: ItemShowtimeBinding,
++        private val onShowtimeClicked: (Long) -> Unit
++    ) :
+         RecyclerView.ViewHolder(binding.root) {
+         
+         private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+@@ -32,6 +35,9 @@
+             val start = timeFormat.format(Date(showtime.startTime))
+             val end = timeFormat.format(Date(showtime.endTime))
+             binding.tvTime.text = "$start - $end"
++            binding.root.setOnClickListener {
++                onShowtimeClicked(showtime.id)
++            }
+         }
+     }
+ 
+Index: app/src/main/java/com/example/colorphone/ui/showtime/ShowtimeFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.colorphone.ui.showtime\r\n\r\nimport androidx.fragment.app.viewModels\r\nimport androidx.lifecycle.Lifecycle\r\nimport androidx.lifecycle.lifecycleScope\r\nimport androidx.lifecycle.repeatOnLifecycle\r\nimport com.example.colorphone.databinding.FragmentShowtimeBinding\r\nimport com.example.colorphone.ui.core.base.BaseFragment\r\nimport dagger.hilt.android.AndroidEntryPoint\r\nimport kotlinx.coroutines.flow.collectLatest\r\nimport kotlinx.coroutines.launch\r\n\r\n@AndroidEntryPoint\r\nclass ShowtimeFragment : BaseFragment<FragmentShowtimeBinding>(FragmentShowtimeBinding::inflate) {\r\n\r\n    private val viewModel: ShowtimeViewModel by viewModels()\r\n    private val showtimeAdapter: ShowtimeAdapter by lazy { ShowtimeAdapter() }\r\n\r\n    override fun setupView() {\r\n        super.setupView()\r\n        binding.rvShowtimes.adapter = showtimeAdapter\r\n    }\r\n\r\n    override fun setupObserver() {\r\n        super.setupObserver()\r\n        viewLifecycleOwner.lifecycleScope.launch {\r\n            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {\r\n                viewModel.showtimes.collectLatest { showtimes ->\r\n                    showtimeAdapter.submitList(showtimes)\r\n                }\r\n            }\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/colorphone/ui/showtime/ShowtimeFragment.kt b/app/src/main/java/com/example/colorphone/ui/showtime/ShowtimeFragment.kt
+--- a/app/src/main/java/com/example/colorphone/ui/showtime/ShowtimeFragment.kt	(revision bc76875baa2d8dc5a5bef5293399e274d12e69ca)
++++ b/app/src/main/java/com/example/colorphone/ui/showtime/ShowtimeFragment.kt	(date 1774604018074)
+@@ -7,14 +7,35 @@
+ import com.example.colorphone.databinding.FragmentShowtimeBinding
+ import com.example.colorphone.ui.core.base.BaseFragment
+ import dagger.hilt.android.AndroidEntryPoint
++import androidx.navigation.fragment.findNavController
++import androidx.core.os.bundleOf
++import com.example.colorphone.R
++import com.example.colorphone.util.SessionManager
+ import kotlinx.coroutines.flow.collectLatest
+ import kotlinx.coroutines.launch
++import javax.inject.Inject
+ 
+ @AndroidEntryPoint
+ class ShowtimeFragment : BaseFragment<FragmentShowtimeBinding>(FragmentShowtimeBinding::inflate) {
+ 
+     private val viewModel: ShowtimeViewModel by viewModels()
+-    private val showtimeAdapter: ShowtimeAdapter by lazy { ShowtimeAdapter() }
++    @Inject lateinit var sessionManager: SessionManager
++
++    private val showtimeAdapter: ShowtimeAdapter by lazy { 
++        ShowtimeAdapter { showtimeId ->
++            if (sessionManager.isLoggedIn()) {
++                findNavController().navigate(
++                    R.id.action_showtimeFragment_to_bookingFragment,
++                    bundleOf("showtimeId" to showtimeId)
++                )
++            } else {
++                findNavController().navigate(
++                    R.id.action_showtimeFragment_to_loginFragment,
++                    bundleOf("showtimeId" to showtimeId)
++                )
++            }
++        }
++    }
+ 
+     override fun setupView() {
+         super.setupView()
+Index: app/src/main/java/com/example/colorphone/data/local/CinemaDao.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.colorphone.data.local\r\n\r\nimport androidx.room.*\r\nimport com.example.colorphone.data.local.entity.*\r\nimport kotlinx.coroutines.flow.Flow\r\n\r\n@Dao\r\ninterface CinemaDao {\r\n    @Query(\"SELECT * FROM users WHERE id = :userId\")\r\n    suspend fun getUser(userId: Long): UserEntity?\r\n\r\n    @Query(\"SELECT * FROM users WHERE email = :email AND passwordHash = :passwordHash\")\r\n    suspend fun login(email: String, passwordHash: String): UserEntity?\r\n\r\n    @Insert(onConflict = OnConflictStrategy.REPLACE)\r\n    suspend fun insertUser(user: UserEntity): Long\r\n\r\n    @Query(\"SELECT * FROM movies\")\r\n    suspend fun getAllMovies(): List<MovieEntity>\r\n\r\n    @Query(\"SELECT * FROM movies\")\r\n    fun getAllMoviesFlow(): Flow<List<MovieEntity>>\r\n\r\n    @Query(\"SELECT * FROM movies WHERE id = :movieId\")\r\n    suspend fun getMovieById(movieId: Long): MovieEntity?\r\n\r\n    @Insert(onConflict = OnConflictStrategy.REPLACE)\r\n    suspend fun insertMovies(movies: List<MovieEntity>)\r\n\r\n    @Query(\"SELECT * FROM theaters\")\r\n    suspend fun getAllTheaters(): List<TheaterEntity>\r\n\r\n    @Query(\"SELECT * FROM theaters\")\r\n    fun getAllTheatersFlow(): Flow<List<TheaterEntity>>\r\n\r\n    @Query(\"SELECT * FROM theaters WHERE id = :theaterId\")\r\n    suspend fun getTheaterById(theaterId: Long): TheaterEntity?\r\n\r\n    @Insert(onConflict = OnConflictStrategy.REPLACE)\r\n    suspend fun insertTheaters(theaters: List<TheaterEntity>)\r\n\r\n    @Query(\"SELECT * FROM showtimes WHERE movieId = :movieId\")\r\n    suspend fun getShowtimesForMovie(movieId: Long): List<ShowtimeEntity>\r\n\r\n    @Query(\"SELECT * FROM showtimes WHERE movieId = :movieId\")\r\n    fun getShowtimesForMovieFlow(movieId: Long): Flow<List<ShowtimeEntity>>\r\n\r\n    @Query(\"SELECT * FROM showtimes WHERE theaterId = :theaterId\")\r\n    suspend fun getShowtimesForTheater(theaterId: Long): List<ShowtimeEntity>\r\n\r\n    @Query(\"SELECT * FROM showtimes WHERE theaterId = :theaterId\")\r\n    fun getShowtimesForTheaterFlow(theaterId: Long): Flow<List<ShowtimeEntity>>\r\n\r\n    @Query(\"SELECT * FROM showtimes WHERE movieId = :movieId AND theaterId = :theaterId\")\r\n    fun getShowtimesForMovieAndTheaterFlow(movieId: Long, theaterId: Long): Flow<List<ShowtimeEntity>>\r\n\r\n    @Insert(onConflict = OnConflictStrategy.REPLACE)\r\n    suspend fun insertShowtimes(showtimes: List<ShowtimeEntity>)\r\n\r\n    @Insert(onConflict = OnConflictStrategy.REPLACE)\r\n    suspend fun insertTicket(ticket: TicketEntity): Long\r\n\r\n    @Query(\"SELECT * FROM tickets WHERE userId = :userId\")\r\n    suspend fun getTicketsForUser(userId: Long): List<TicketEntity>\r\n\r\n    @Query(\"SELECT * FROM tickets WHERE userId = :userId\")\r\n    fun getTicketsForUserFlow(userId: Long): Flow<List<TicketEntity>>\r\n\r\n    @Query(\"SELECT DISTINCT theaters.* FROM theaters INNER JOIN showtimes ON theaters.id = showtimes.theaterId WHERE showtimes.movieId = :movieId\")\r\n    fun getTheatersForMovieFlow(movieId: Long): Flow<List<TheaterEntity>>\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/colorphone/data/local/CinemaDao.kt b/app/src/main/java/com/example/colorphone/data/local/CinemaDao.kt
+--- a/app/src/main/java/com/example/colorphone/data/local/CinemaDao.kt	(revision bc76875baa2d8dc5a5bef5293399e274d12e69ca)
++++ b/app/src/main/java/com/example/colorphone/data/local/CinemaDao.kt	(date 1774603737806)
+@@ -68,4 +68,7 @@
+ 
+     @Query("SELECT DISTINCT theaters.* FROM theaters INNER JOIN showtimes ON theaters.id = showtimes.theaterId WHERE showtimes.movieId = :movieId")
+     fun getTheatersForMovieFlow(movieId: Long): Flow<List<TheaterEntity>>
++
++    @Query("SELECT * FROM tickets WHERE showtimeId = :showtimeId")
++    fun getTicketsForShowtimeFlow(showtimeId: Long): Flow<List<TicketEntity>>
+ }
+Index: app/src/main/java/com/example/colorphone/ui/login/LoginFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.colorphone.ui.login\r\n\r\nimport android.os.Bundle\r\nimport android.view.View\r\nimport android.widget.Toast\r\nimport androidx.fragment.app.viewModels\r\nimport androidx.lifecycle.Lifecycle\r\nimport androidx.lifecycle.lifecycleScope\r\nimport androidx.lifecycle.repeatOnLifecycle\r\nimport com.example.colorphone.databinding.FragmentLoginBinding\r\nimport com.example.colorphone.ui.core.base.BaseFragment\r\nimport dagger.hilt.android.AndroidEntryPoint\r\nimport kotlinx.coroutines.launch\r\n\r\n@AndroidEntryPoint\r\nclass LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {\r\n\r\n    private val viewModel: LoginViewModel by viewModels()\r\n\r\n    override fun setUpListener() {\r\n        binding.btnLogin.setOnClickListener {\r\n            val email = binding.etEmail.text.toString()\r\n            val password = binding.etPassword.text.toString()\r\n            if (email.isNotEmpty() && password.isNotEmpty()) {\r\n                viewModel.login(email, password)\r\n            } else {\r\n                Toast.makeText(requireContext(), \"Please enter email and password\", Toast.LENGTH_SHORT).show()\r\n            }\r\n        }\r\n    }\r\n\r\n    override fun setupObserver() {\r\n        viewLifecycleOwner.lifecycleScope.launch {\r\n            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {\r\n                viewModel.loginState.collect { state ->\r\n                    when (state) {\r\n                        is LoginViewModel.LoginState.Loading -> {\r\n                            binding.btnLogin.isEnabled = false\r\n                        }\r\n                        is LoginViewModel.LoginState.Success -> {\r\n                            binding.btnLogin.isEnabled = true\r\n                            Toast.makeText(requireContext(), \"Login successful!\", Toast.LENGTH_SHORT).show()\r\n                            // Navigate to main or back\r\n                            // navController.navigateUp()\r\n                        }\r\n                        is LoginViewModel.LoginState.Error -> {\r\n                            binding.btnLogin.isEnabled = true\r\n                            Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()\r\n                        }\r\n                        else -> {\r\n                            binding.btnLogin.isEnabled = true\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/colorphone/ui/login/LoginFragment.kt b/app/src/main/java/com/example/colorphone/ui/login/LoginFragment.kt
+--- a/app/src/main/java/com/example/colorphone/ui/login/LoginFragment.kt	(revision bc76875baa2d8dc5a5bef5293399e274d12e69ca)
++++ b/app/src/main/java/com/example/colorphone/ui/login/LoginFragment.kt	(date 1774604011823)
+@@ -11,6 +11,9 @@
+ import com.example.colorphone.ui.core.base.BaseFragment
+ import dagger.hilt.android.AndroidEntryPoint
+ import kotlinx.coroutines.launch
++import androidx.navigation.fragment.findNavController
++import androidx.core.os.bundleOf
++import com.example.colorphone.R
+ 
+ @AndroidEntryPoint
+ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
+@@ -40,8 +43,15 @@
+                         is LoginViewModel.LoginState.Success -> {
+                             binding.btnLogin.isEnabled = true
+                             Toast.makeText(requireContext(), "Login successful!", Toast.LENGTH_SHORT).show()
+-                            // Navigate to main or back
+-                            // navController.navigateUp()
++                            val showtimeId = arguments?.getLong("showtimeId", -1L) ?: -1L
++                            if (showtimeId != -1L) {
++                                findNavController().navigate(
++                                    R.id.action_loginFragment_to_bookingFragment,
++                                    bundleOf("showtimeId" to showtimeId)
++                                )
++                            } else {
++                                findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
++                            }
+                         }
+                         is LoginViewModel.LoginState.Error -> {
+                             binding.btnLogin.isEnabled = true
+Index: app/src/main/java/com/example/colorphone/ui/login/LoginViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.colorphone.ui.login\r\n\r\nimport androidx.lifecycle.ViewModel\r\nimport androidx.lifecycle.viewModelScope\r\nimport com.example.colorphone.domain.model.User\r\nimport com.example.colorphone.domain.repository.CinemaRepository\r\nimport dagger.hilt.android.lifecycle.HiltViewModel\r\nimport kotlinx.coroutines.flow.MutableSharedFlow\r\nimport kotlinx.coroutines.flow.MutableStateFlow\r\nimport kotlinx.coroutines.flow.SharedFlow\r\nimport kotlinx.coroutines.flow.StateFlow\r\nimport kotlinx.coroutines.launch\r\nimport javax.inject.Inject\r\n\r\n@HiltViewModel\r\nclass LoginViewModel @Inject constructor(\r\n    private val cinemaRepository: CinemaRepository\r\n) : ViewModel() {\r\n\r\n    private val _loginState = MutableStateFlow<LoginState>(LoginState.Idle)\r\n    val loginState: StateFlow<LoginState> = _loginState\r\n\r\n    private val _loginSuccess = MutableSharedFlow<User>()\r\n    val loginSuccess: SharedFlow<User> = _loginSuccess\r\n\r\n    fun login(email: String, passwordHash: String) {\r\n        viewModelScope.launch {\r\n            _loginState.value = LoginState.Loading\r\n            val user = cinemaRepository.login(email, passwordHash)\r\n            if (user != null) {\r\n                _loginState.value = LoginState.Success(user)\r\n                _loginSuccess.emit(user)\r\n            } else {\r\n                _loginState.value = LoginState.Error(\"Invalid email or password\")\r\n            }\r\n        }\r\n    }\r\n\r\n    sealed class LoginState {\r\n        object Idle : LoginState()\r\n        object Loading : LoginState()\r\n        data class Success(val user: User) : LoginState()\r\n        data class Error(val message: String) : LoginState()\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/colorphone/ui/login/LoginViewModel.kt b/app/src/main/java/com/example/colorphone/ui/login/LoginViewModel.kt
+--- a/app/src/main/java/com/example/colorphone/ui/login/LoginViewModel.kt	(revision bc76875baa2d8dc5a5bef5293399e274d12e69ca)
++++ b/app/src/main/java/com/example/colorphone/ui/login/LoginViewModel.kt	(date 1774604008074)
+@@ -12,9 +12,12 @@
+ import kotlinx.coroutines.launch
+ import javax.inject.Inject
+ 
++import com.example.colorphone.util.SessionManager
++
+ @HiltViewModel
+ class LoginViewModel @Inject constructor(
+-    private val cinemaRepository: CinemaRepository
++    private val cinemaRepository: CinemaRepository,
++    private val sessionManager: SessionManager
+ ) : ViewModel() {
+ 
+     private val _loginState = MutableStateFlow<LoginState>(LoginState.Idle)
+@@ -28,6 +31,7 @@
+             _loginState.value = LoginState.Loading
+             val user = cinemaRepository.login(email, passwordHash)
+             if (user != null) {
++                sessionManager.saveUserId(user.id)
+                 _loginState.value = LoginState.Success(user)
+                 _loginSuccess.emit(user)
+             } else {
+Index: app/src/main/res/navigation/nav_graph.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<navigation xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/nav_graph\"\r\n    app:startDestination=\"@id/movieFragment\">\r\n\r\n\r\n    <fragment\r\n        android:id=\"@+id/mainFragment\"\r\n        android:name=\"com.example.colorphone.ui.main.MainFragment\"\r\n        android:label=\"fragment_main\"\r\n        tools:layout=\"@layout/fragment_main\" />\r\n    <fragment\r\n        android:id=\"@+id/movieFragment\"\r\n        android:name=\"com.example.colorphone.ui.main.MovieFragment\"\r\n        android:label=\"MovieFragment\" >\r\n        <action\r\n            android:id=\"@+id/action_movieFragment_to_theatreFragment\"\r\n            app:destination=\"@id/theatreFragment\" />\r\n    </fragment>\r\n    <fragment\r\n        android:id=\"@+id/loginFragment\"\r\n        android:name=\"com.example.colorphone.ui.login.LoginFragment\"\r\n        android:label=\"LoginFragment\" />\r\n    <fragment\r\n        android:id=\"@+id/theatreFragment\"\r\n        android:name=\"com.example.colorphone.ui.theatre.TheatreFragment\"\r\n        android:label=\"TheatreFragment\" >\r\n        <argument\r\n            android:name=\"movieId\"\r\n            app:argType=\"long\" />\r\n        <action\r\n            android:id=\"@+id/action_theatreFragment_to_showtimeFragment\"\r\n            app:destination=\"@id/showtimeFragment\" />\r\n    </fragment>\r\n    <fragment\r\n        android:id=\"@+id/showtimeFragment\"\r\n        android:name=\"com.example.colorphone.ui.showtime.ShowtimeFragment\"\r\n        android:label=\"ShowtimeFragment\" >\r\n        <argument\r\n            android:name=\"movieId\"\r\n            app:argType=\"long\" />\r\n        <argument\r\n            android:name=\"theaterId\"\r\n            app:argType=\"long\" />\r\n    </fragment>\r\n\r\n</navigation>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/navigation/nav_graph.xml b/app/src/main/res/navigation/nav_graph.xml
+--- a/app/src/main/res/navigation/nav_graph.xml	(revision bc76875baa2d8dc5a5bef5293399e274d12e69ca)
++++ b/app/src/main/res/navigation/nav_graph.xml	(date 1774604055555)
+@@ -22,7 +22,18 @@
+     <fragment
+         android:id="@+id/loginFragment"
+         android:name="com.example.colorphone.ui.login.LoginFragment"
+-        android:label="LoginFragment" />
++        android:label="LoginFragment" >
++        <argument
++            android:name="showtimeId"
++            app:argType="long"
++            android:defaultValue="-1L" />
++        <action
++            android:id="@+id/action_loginFragment_to_bookingFragment"
++            app:destination="@id/bookingFragment" />
++        <action
++            android:id="@+id/action_loginFragment_to_mainFragment"
++            app:destination="@id/mainFragment" />
++    </fragment>
+     <fragment
+         android:id="@+id/theatreFragment"
+         android:name="com.example.colorphone.ui.theatre.TheatreFragment"
+@@ -44,6 +55,29 @@
+         <argument
+             android:name="theaterId"
+             app:argType="long" />
++        <action
++            android:id="@+id/action_showtimeFragment_to_bookingFragment"
++            app:destination="@id/bookingFragment" />
++        <action
++            android:id="@+id/action_showtimeFragment_to_loginFragment"
++            app:destination="@id/loginFragment" />
++    </fragment>
++
++    <fragment
++        android:id="@+id/bookingFragment"
++        android:name="com.example.colorphone.ui.booking.BookingFragment"
++        android:label="BookingFragment" >
++        <argument
++            android:name="showtimeId"
++            app:argType="long" />
++        <action
++            android:id="@+id/action_bookingFragment_to_ticketListFragment"
++            app:destination="@id/ticketListFragment" />
+     </fragment>
+ 
++    <fragment
++        android:id="@+id/ticketListFragment"
++        android:name="com.example.colorphone.ui.ticket.TicketListFragment"
++        android:label="TicketListFragment" />
++
+ </navigation>
+\ No newline at end of file
+Index: app/src/main/java/com/example/colorphone/domain/repository/CinemaRepository.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.colorphone.domain.repository\r\n\r\nimport com.example.colorphone.data.local.CinemaDao\r\nimport com.example.colorphone.data.local.entity.MovieEntity\r\nimport com.example.colorphone.data.local.entity.TheaterEntity\r\nimport com.example.colorphone.data.local.entity.TicketEntity\r\nimport com.example.colorphone.data.local.entity.UserEntity\r\nimport com.example.colorphone.domain.model.Movie\r\nimport com.example.colorphone.domain.model.Showtime\r\nimport com.example.colorphone.domain.model.Theater\r\nimport com.example.colorphone.domain.model.Ticket\r\nimport com.example.colorphone.domain.model.User\r\nimport javax.inject.Inject\r\nimport javax.inject.Singleton\r\nimport kotlinx.coroutines.flow.Flow\r\nimport kotlinx.coroutines.flow.map\r\n\r\n@Singleton\r\nclass CinemaRepository @Inject constructor(\r\n    private val cinemaDao: CinemaDao\r\n) {\r\n    suspend fun getUser(userId: Long): User? = cinemaDao.getUser(userId)?.toDomain()\r\n\r\n    suspend fun login(email: String, passwordHash: String): User? =\r\n        cinemaDao.login(email, passwordHash)?.toDomain()\r\n\r\n    suspend fun register(user: User): Long =\r\n        cinemaDao.insertUser(UserEntity.fromDomain(user))\r\n\r\n    suspend fun getAllMovies(): List<Movie> =\r\n        cinemaDao.getAllMovies().map { it.toDomain() }\r\n\r\n    fun getAllMoviesFlow(): Flow<List<Movie>> =\r\n        cinemaDao.getAllMoviesFlow().map { list -> list.map { it.toDomain() } }\r\n\r\n    suspend fun getMovieById(movieId: Long): Movie? =\r\n        cinemaDao.getMovieById(movieId)?.toDomain()\r\n\r\n    suspend fun getAllTheaters(): List<Theater> =\r\n        cinemaDao.getAllTheaters().map { it.toDomain() }\r\n\r\n    fun getAllTheatersFlow(): Flow<List<Theater>> =\r\n        cinemaDao.getAllTheatersFlow().map { list -> list.map { it.toDomain() } }\r\n\r\n    suspend fun getTheaterById(theaterId: Long): Theater? =\r\n        cinemaDao.getTheaterById(theaterId)?.toDomain()\r\n\r\n    fun getTheatersForMovieFlow(movieId: Long): Flow<List<Theater>> =\r\n        cinemaDao.getTheatersForMovieFlow(movieId).map { list -> list.map { it.toDomain() } }\r\n\r\n    suspend fun getShowtimesForMovie(movieId: Long): List<Showtime> =\r\n        cinemaDao.getShowtimesForMovie(movieId).map { it.toDomain() }\r\n\r\n    fun getShowtimesForMovieFlow(movieId: Long): Flow<List<Showtime>> =\r\n        cinemaDao.getShowtimesForMovieFlow(movieId).map { list -> list.map { it.toDomain() } }\r\n\r\n    suspend fun getShowtimesForTheater(theaterId: Long): List<Showtime> =\r\n        cinemaDao.getShowtimesForTheater(theaterId).map { it.toDomain() }\r\n\r\n    fun getShowtimesForTheaterFlow(theaterId: Long): Flow<List<Showtime>> =\r\n        cinemaDao.getShowtimesForTheaterFlow(theaterId).map { list -> list.map { it.toDomain() } }\r\n\r\n    fun getShowtimesForMovieAndTheaterFlow(movieId: Long, theaterId: Long): Flow<List<Showtime>> =\r\n        cinemaDao.getShowtimesForMovieAndTheaterFlow(movieId, theaterId).map { list -> list.map { it.toDomain() } }\r\n\r\n    suspend fun bookTicket(ticket: Ticket): Long =\r\n        cinemaDao.insertTicket(TicketEntity.fromDomain(ticket))\r\n\r\n    suspend fun getTicketsForUser(userId: Long): List<Ticket> =\r\n        cinemaDao.getTicketsForUser(userId).map { it.toDomain() }\r\n\r\n    fun getTicketsForUserFlow(userId: Long): Flow<List<Ticket>> =\r\n        cinemaDao.getTicketsForUserFlow(userId).map { list -> list.map { it.toDomain() } }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/colorphone/domain/repository/CinemaRepository.kt b/app/src/main/java/com/example/colorphone/domain/repository/CinemaRepository.kt
+--- a/app/src/main/java/com/example/colorphone/domain/repository/CinemaRepository.kt	(revision bc76875baa2d8dc5a5bef5293399e274d12e69ca)
++++ b/app/src/main/java/com/example/colorphone/domain/repository/CinemaRepository.kt	(date 1774603740205)
+@@ -71,4 +71,7 @@
+ 
+     fun getTicketsForUserFlow(userId: Long): Flow<List<Ticket>> =
+         cinemaDao.getTicketsForUserFlow(userId).map { list -> list.map { it.toDomain() } }
++
++    fun getTicketsForShowtimeFlow(showtimeId: Long): Flow<List<Ticket>> =
++        cinemaDao.getTicketsForShowtimeFlow(showtimeId).map { list -> list.map { it.toDomain() } }
+ }

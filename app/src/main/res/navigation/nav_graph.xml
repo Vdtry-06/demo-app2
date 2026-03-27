@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/movieFragment">
 
 
     <fragment
@@ -11,5 +11,73 @@
         android:name="com.example.colorphone.ui.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/movieFragment"
+        android:name="com.example.colorphone.ui.main.MovieFragment"
+        android:label="MovieFragment" >
+        <action
+            android:id="@+id/action_movieFragment_to_theatreFragment"
+            app:destination="@id/theatreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.colorphone.ui.login.LoginFragment"
+        android:label="LoginFragment" >
+        <argument
+            android:name="showtimeId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+        <action
+            android:id="@+id/action_loginFragment_to_bookingFragment"
+            app:destination="@id/bookingFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/theatreFragment"
+        android:name="com.example.colorphone.ui.theatre.TheatreFragment"
+        android:label="TheatreFragment" >
+        <argument
+            android:name="movieId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_theatreFragment_to_showtimeFragment"
+            app:destination="@id/showtimeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showtimeFragment"
+        android:name="com.example.colorphone.ui.showtime.ShowtimeFragment"
+        android:label="ShowtimeFragment" >
+        <argument
+            android:name="movieId"
+            app:argType="long" />
+        <argument
+            android:name="theaterId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_showtimeFragment_to_bookingFragment"
+            app:destination="@id/bookingFragment" />
+        <action
+            android:id="@+id/action_showtimeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bookingFragment"
+        android:name="com.example.colorphone.ui.booking.BookingFragment"
+        android:label="BookingFragment" >
+        <argument
+            android:name="showtimeId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_bookingFragment_to_ticketListFragment"
+            app:destination="@id/ticketListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ticketListFragment"
+        android:name="com.example.colorphone.ui.ticket.TicketListFragment"
+        android:label="TicketListFragment" />
 
 </navigation>
