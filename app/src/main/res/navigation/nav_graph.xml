@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFraa@gment">
+    app:startDestination="@id/movieFragment">
 
 
     <fragment
@@ -11,6 +11,10 @@
         android:name="com.example.colorphone.ui.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/movieFragment"
+        android:name="com.example.colorphone.ui.main.MovieFragment"
+        android:label="MovieFragment" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.colorphone.ui.login.LoginFragment"
