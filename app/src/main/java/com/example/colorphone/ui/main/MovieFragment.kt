@@ -17,7 +17,12 @@ import kotlinx.coroutines.launch
 class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::inflate) {
 
     private val viewModel: MovieViewModel by viewModels()
-    private val movieAdapter: MovieAdapter by lazy { MovieAdapter() }
+    private val movieAdapter: MovieAdapter by lazy { 
+        MovieAdapter { movie ->
+            val action = MovieFragmentDirections.actionMovieFragmentToTheatreFragment(movie.id)
+            navController.navigate(action)
+        } 
+    }
 
     override fun setupView() {
         super.setupView()

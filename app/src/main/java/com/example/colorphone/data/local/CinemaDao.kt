@@ -62,4 +62,7 @@ interface CinemaDao {
 
     @Query("SELECT * FROM tickets WHERE userId = :userId")
     fun getTicketsForUserFlow(userId: Long): Flow<List<TicketEntity>>
+
+    @Query("SELECT DISTINCT theaters.* FROM theaters INNER JOIN showtimes ON theaters.id = showtimes.theaterId WHERE showtimes.movieId = :movieId")
+    fun getTheatersForMovieFlow(movieId: Long): Flow<List<TheaterEntity>>
 }
