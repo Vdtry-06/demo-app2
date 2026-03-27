@@ -43,16 +43,16 @@ abstract class AppDatabase : RoomDatabase() {
             dao.insertUser(user)
 
             val movies = listOf(
-                MovieEntity(1, "Mai", "Phim tâm lý tình cảm của Trấn Thành", "https://image.tmdb.org/t/p/w500/mai_poster.jpg", 131),
-                MovieEntity(2, "Đào, Phở và Piano", "Phim lịch sử về Hà Nội 1946", "https://image.tmdb.org/t/p/w500/dao_poster.jpg", 120),
-                MovieEntity(3, "Lật Mặt 7: Một Điều Ước", "Hành trình tìm lại tình cảm gia đình", "https://image.tmdb.org/t/p/w500/latmat7_poster.jpg", 138),
-                MovieEntity(4, "Dune: Part Two", "Hành trình tiếp theo của Paul Atreides", "https://image.tmdb.org/t/p/w500/dune2_poster.jpg", 166),
-                MovieEntity(5, "Godzilla x Kong", "Sự trỗi dậy của đế chế mới", "https://image.tmdb.org/t/p/w500/gxk_poster.jpg", 115),
-                MovieEntity(6, "Kung Fu Panda 4", "Po đối đầu với Tắc Kè Bông", "https://image.tmdb.org/t/p/w500/panda4_poster.jpg", 94),
-                MovieEntity(7, "Exhuma", "Quật mộ trùng tang - Kinh dị tâm linh", "https://image.tmdb.org/t/p/w500/exhuma_poster.jpg", 134),
-                MovieEntity(8, "Spider-Man: Across the Spider-Verse", "Hành trình xuyên đa vũ trụ", "https://image.tmdb.org/t/p/w500/spiderman_poster.jpg", 140),
-                MovieEntity(9, "Oppenheimer", "Câu chuyện về cha đẻ bom nguyên tử", "https://image.tmdb.org/t/p/w500/oppenheimer_poster.jpg", 180),
-                MovieEntity(10, "Past Lives", "Muôn kiếp nhân duyên", "https://image.tmdb.org/t/p/w500/pastlives_poster.jpg", 106)
+                MovieEntity(1, "Mai", "Phim tâm lý tình cảm của Trấn Thành", "https://cdn2.tuoitre.vn/471584752817336320/2024/2/14/phuong-anh-dao-6-17078975904401769282117.jpg", 131),
+                MovieEntity(2, "Đào, Phở và Piano", "Phim lịch sử về Hà Nội 1946", "https://cdn2.tuoitre.vn/471584752817336320/2024/2/14/phuong-anh-dao-6-17078975904401769282117.jpg", 120),
+                MovieEntity(3, "Lật Mặt 7: Một Điều Ước", "Hành trình tìm lại tình cảm gia đình", "https://cdn2.tuoitre.vn/471584752817336320/2024/2/14/phuong-anh-dao-6-17078975904401769282117.jpg", 138),
+                MovieEntity(4, "Dune: Part Two", "Hành trình tiếp theo của Paul Atreides", "https://cdn2.tuoitre.vn/471584752817336320/2024/2/14/phuong-anh-dao-6-17078975904401769282117.jpg", 166),
+                MovieEntity(5, "Godzilla x Kong", "Sự trỗi dậy của đế chế mới", "https://cdn2.tuoitre.vn/471584752817336320/2024/2/14/phuong-anh-dao-6-17078975904401769282117.jpg", 115),
+                MovieEntity(6, "Kung Fu Panda 4", "Po đối đầu với Tắc Kè Bông", "https://cdn2.tuoitre.vn/471584752817336320/2024/2/14/phuong-anh-dao-6-17078975904401769282117.jpg", 94),
+                MovieEntity(7, "Exhuma", "Quật mộ trùng tang - Kinh dị tâm linh", "https://cdn2.tuoitre.vn/471584752817336320/2024/2/14/phuong-anh-dao-6-17078975904401769282117.jpg", 134),
+                MovieEntity(8, "Spider-Man: Across the Spider-Verse", "Hành trình xuyên đa vũ trụ", "https://cdn2.tuoitre.vn/471584752817336320/2024/2/14/phuong-anh-dao-6-17078975904401769282117.jpg", 140),
+                MovieEntity(9, "Oppenheimer", "Câu chuyện về cha đẻ bom nguyên tử", "https://cdn2.tuoitre.vn/471584752817336320/2024/2/14/phuong-anh-dao-6-17078975904401769282117.jpg", 180),
+                MovieEntity(10, "Past Lives", "Muôn kiếp nhân duyên", "https://cdn2.tuoitre.vn/471584752817336320/2024/2/14/phuong-anh-dao-6-17078975904401769282117.jpg", 106)
             )
             dao.insertMovies(movies)
 
