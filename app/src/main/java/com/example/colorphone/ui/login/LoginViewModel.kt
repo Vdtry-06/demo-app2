@@ -12,9 +12,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+import com.example.colorphone.util.SessionManager
+
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val cinemaRepository: CinemaRepository
+    private val cinemaRepository: CinemaRepository,
+    private val sessionManager: SessionManager
 ) : ViewModel() {
 
     private val _loginState = MutableStateFlow<LoginState>(LoginState.Idle)
@@ -28,6 +31,7 @@ class LoginViewModel @Inject constructor(
             _loginState.value = LoginState.Loading
             val user = cinemaRepository.login(email, passwordHash)
             if (user != null) {
+                sessionManager.saveUserId(user.id)
                 _loginState.value = LoginState.Success(user)
                 _loginSuccess.emit(user)
             } else {

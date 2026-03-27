@@ -11,18 +11,21 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class ShowtimeAdapter : ListAdapter<Showtime, ShowtimeAdapter.ShowtimeViewHolder>(ShowtimeDiffCallback()) {
+class ShowtimeAdapter(private val onShowtimeClicked: (Long) -> Unit) : ListAdapter<Showtime, ShowtimeAdapter.ShowtimeViewHolder>(ShowtimeDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShowtimeViewHolder {
         val binding = ItemShowtimeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ShowtimeViewHolder(binding)
+        return ShowtimeViewHolder(binding, onShowtimeClicked)
     }
 
     override fun onBindViewHolder(holder: ShowtimeViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    class ShowtimeViewHolder(private val binding: ItemShowtimeBinding) :
+    class ShowtimeViewHolder(
+        private val binding: ItemShowtimeBinding,
+        private val onShowtimeClicked: (Long) -> Unit
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         
         private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
@@ -32,6 +35,9 @@ class ShowtimeAdapter : ListAdapter<Showtime, ShowtimeAdapter.ShowtimeViewHolder
             val start = timeFormat.format(Date(showtime.startTime))
             val end = timeFormat.format(Date(showtime.endTime))
             binding.tvTime.text = "$start - $end"
+            binding.root.setOnClickListener {
+                onShowtimeClicked(showtime.id)
+            }
         }
     }
 

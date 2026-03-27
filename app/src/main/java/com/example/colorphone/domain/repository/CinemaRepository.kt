@@ -71,4 +71,7 @@ class CinemaRepository @Inject constructor(
 
     fun getTicketsForUserFlow(userId: Long): Flow<List<Ticket>> =
         cinemaDao.getTicketsForUserFlow(userId).map { list -> list.map { it.toDomain() } }
+
+    fun getTicketsForShowtimeFlow(showtimeId: Long): Flow<List<Ticket>> =
+        cinemaDao.getTicketsForShowtimeFlow(showtimeId).map { list -> list.map { it.toDomain() } }
 }

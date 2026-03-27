@@ -11,6 +11,9 @@ import com.example.colorphone.databinding.FragmentLoginBinding
 import com.example.colorphone.ui.core.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import androidx.navigation.fragment.findNavController
+import androidx.core.os.bundleOf
+import com.example.colorphone.R
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
@@ -40,8 +43,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                         is LoginViewModel.LoginState.Success -> {
                             binding.btnLogin.isEnabled = true
                             Toast.makeText(requireContext(), "Login successful!", Toast.LENGTH_SHORT).show()
-                            // Navigate to main or back
-                            // navController.navigateUp()
+                            val showtimeId = arguments?.getLong("showtimeId", -1L) ?: -1L
+                            if (showtimeId != -1L) {
+                                findNavController().navigate(
+                                    R.id.action_loginFragment_to_bookingFragment,
+                                    bundleOf("showtimeId" to showtimeId)
+                                )
+                            } else {
+                                findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+                            }
                         }
                         is LoginViewModel.LoginState.Error -> {
                             binding.btnLogin.isEnabled = true

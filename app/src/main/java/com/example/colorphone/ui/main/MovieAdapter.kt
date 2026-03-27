@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil3.load
 import com.example.colorphone.databinding.ItemMovieBinding
 import com.example.colorphone.domain.model.Movie
 
@@ -29,8 +30,7 @@ class MovieAdapter(private val onItemClick: (Movie) -> Unit) : ListAdapter<Movie
             binding.tvTitle.text = movie.title
             binding.tvDuration.text = "${movie.duration} min"
             binding.tvDescription.text = movie.description
-            // Normally we would use Glide or Coil here to load posterUrl
-            // For now, we'll just leave it as it is.
+            binding.ivPoster.load(movie.posterUrl)
         }
     }
 

@@ -22,7 +22,18 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.colorphone.ui.login.LoginFragment"
-        android:label="LoginFragment" />
+        android:label="LoginFragment" >
+        <argument
+            android:name="showtimeId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+        <action
+            android:id="@+id/action_loginFragment_to_bookingFragment"
+            app:destination="@id/bookingFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
     <fragment
         android:id="@+id/theatreFragment"
         android:name="com.example.colorphone.ui.theatre.TheatreFragment"
@@ -44,6 +55,29 @@
         <argument
             android:name="theaterId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_showtimeFragment_to_bookingFragment"
+            app:destination="@id/bookingFragment" />
+        <action
+            android:id="@+id/action_showtimeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/bookingFragment"
+        android:name="com.example.colorphone.ui.booking.BookingFragment"
+        android:label="BookingFragment" >
+        <argument
+            android:name="showtimeId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_bookingFragment_to_ticketListFragment"
+            app:destination="@id/ticketListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ticketListFragment"
+        android:name="com.example.colorphone.ui.ticket.TicketListFragment"
+        android:label="TicketListFragment" />
 
 </navigation>
